@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\PageType.cs" />
     <Compile Include="Modelos\Event.cs" />
     <Compile Include="Modelos\P2PContainer.cs" />
     <Compile Include="Modelos\P2PContainerContent.cs" />
@@ -51,7 +52,12 @@
     <Compile Include="Modelos\P2PWidgetType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\ContainerRepository.cs" />
+    <Compile Include="Repositorios\EventRepository.cs" />
     <Compile Include="Repositorios\WidgetRepository.cs" />
+    <Compile Include="Servicios\Container.cs" />
+    <Compile Include="Servicios\Events.cs" />
+    <Compile Include="Servicios\Widgets.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

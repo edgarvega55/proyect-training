@@ -10,7 +10,7 @@ namespace Proyecto_de_entrenamiento.Modelos
     {
         public int ContainerID { get; set; }
         public int EventID { get; set; }
-        public int P2PPageTypeID { get; set; }
+        public string P2PPageTypeID { get; set; }
         public string Properties { get; set; }
         public bool IsHero { get; set; }
         public bool IsHeroLocked { get; set; }
