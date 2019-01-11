@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto_de_entrenamiento.Modelos
 {
-    class P2PContainerContent
+    public class P2PContainerContent
     {
         public int ContainerID { get; set; }
         public string LenguageCode { get; set; }

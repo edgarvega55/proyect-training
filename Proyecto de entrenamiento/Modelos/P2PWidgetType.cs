@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto_de_entrenamiento.Modelos
 {
-    class P2PWidgetType
+    public class P2PWidgetType
     {
         public int P2PWidgetTypeID { get; set; }
         public string Documentation { get; set; }

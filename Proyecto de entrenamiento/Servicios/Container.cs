@@ -1,31 +1,54 @@
 ﻿using System;
 using Proyecto_de_entrenamiento.Repositorios;
 using Proyecto_de_entrenamiento.Modelos;
+using System.Collections.Generic;
 
 namespace Proyecto_de_entrenamiento.Servicios
 {
-    interface IContainer
+    public interface IContainer
     {
-        void createContainers();
+        List<P2PContainer> createContainers();
+        P2PContainer FindContainer(List<P2PContainer> containers, int containerId);
     }
 
-    class Container : IContainer
+    public class Container : IContainer
     {
-        public void createContainers()
+        public List<P2PContainer> createContainers()
         {
+            List<P2PContainer> listContainer = new List<P2PContainer>();
             IContainerRepository containerRepository = new ContainerRepository();
-            Console.WriteLine("");
-            Console.WriteLine("**** Containers ****");
+
             for (int i = 1; i <= 5; i++)
             {
                 P2PContainer container = containerRepository.AddContainer(i);
-                Console.WriteLine("Container ID: {0}", container.ContainerID);
-                Console.WriteLine("Container Page Type: {0}", container.P2PPageTypeID);
+                container.widgets.Reverse();
+
+                for (var a = 0; a < container.widgets.Count; a++)
+                {
+                   if (container.widgets[a].Locked == "y")
+                   {
+                        container.widgets.Remove(container.widgets[a]);
+                   }
+                }
 
                 P2PContainerContent containerContent = containerRepository.AddContainerContent(i);
-                Console.WriteLine("Container Content ID: {0}", containerContent.ContainerID);
-                Console.WriteLine("Container Content LenguageCode: {0}", containerContent.LenguageCode);
+                listContainer.Add(container);
             }
+
+            return listContainer;
+        }
+
+        public P2PContainer FindContainer(List<P2PContainer> containers, int containerId)
+        {
+            foreach (P2PContainer container in containers)
+            {
+                if (container.ContainerID == containerId)
+                {
+                    return container;
+                }
+            }
+
+            return null;
         }
     }
 }

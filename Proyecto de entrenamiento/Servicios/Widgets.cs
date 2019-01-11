@@ -5,26 +5,22 @@ using System.Collections.Generic;
 
 namespace Proyecto_de_entrenamiento.Servicios
 {
-    interface IWidgets
+    public interface IWidgets
     {
-        void createWidgets();
+        void CreateWidgets(P2PContainer ContainerID);
     }
 
-    class Widgets : IWidgets
+    public class Widgets : IWidgets
     {
-        public void createWidgets()
+        public void CreateWidgets(P2PContainer Container)
         {
             IWidgetRepository widgetRepository = new WidgetRepository();
-            Console.WriteLine("");
-            Console.WriteLine("**** Widgets ****");
-            for (int i = 1; i <= 15; i++)
+            List<P2PWidget> widgets = new List<P2PWidget>();
+
+            for (int i = 1; i <= 5; i++)
             {
-                P2PWidget widget = widgetRepository.AddWidget(i);
-
-                Console.WriteLine("");
-                Console.WriteLine("Widget ID: {0}", widget.WidgetID);
-                Console.WriteLine("Widget Properties: {0}", widget.Properties);
-
+                P2PWidget widget = widgetRepository.AddWidget(i, Container.ContainerID);
+                widgets.Add(widget);
                 List<P2PWidgetContent> widgetContentList =  widgetRepository.AddWidgetContent(i);
 
                 foreach (P2PWidgetContent widgetContent in widgetContentList)
@@ -33,6 +29,7 @@ namespace Proyecto_de_entrenamiento.Servicios
                     Console.WriteLine("Widget Content LenguageCode: {0}", widgetContent.LenguageCode);
                 }
             }
+            Container.widgets = widgets;
         }
     }
 }

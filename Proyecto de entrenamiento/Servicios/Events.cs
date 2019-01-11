@@ -1,27 +1,61 @@
 ﻿using System;
 using Proyecto_de_entrenamiento.Repositorios;
 using Proyecto_de_entrenamiento.Modelos;
+using System.Collections.Generic;
 
 namespace Proyecto_de_entrenamiento.Servicios
 {
-    interface IEvents
+    public interface IEvents
     {
-        void createEvents();
+        List<Event> createEvents();
+        EventContainer FindEvent(List<Event> events, List<P2PContainer> containers, int eventId);
     }
 
-    class Events : IEvents
+    public class Events : IEvents
     {
-        public void createEvents()
+        public List<Event> createEvents()
         {
             IEventRepository eventRepository = new EventRepository();
-            Console.WriteLine("");
-            Console.WriteLine("**** Events ****");
+            List<Event> events = new List<Event>();
+            int countToContainerID = 5;
+
             for (int i = 1; i <= 5; i++)
             {
-                Event newEvent = eventRepository.addEvent(i, i+1);
-                Console.WriteLine("Event ID: {0}", newEvent.EventID);
-                Console.WriteLine("Event Organization ID: {0}", newEvent.OrganizationID);
+                Event newEvent = eventRepository.addEvent(i, i+1, countToContainerID);
+                countToContainerID--;
+                events.Add(newEvent);
             }
+            return events;
+        }
+
+        public EventContainer FindEvent (List<Event> events, List<P2PContainer> containers, int eventId)
+        {
+            EventContainer eventContainer;
+
+            foreach (Event entityEvent in events)
+            {
+                if (entityEvent.EventID == eventId)
+                {
+                    IContainer servicioContainer = new Container();
+                    P2PContainer container = servicioContainer.FindContainer(containers, entityEvent.ContainerID);
+                    eventContainer = addEventContainer(entityEvent.EventID, entityEvent.Description, container);
+                    return eventContainer;
+                }
+            }
+
+            return null;
+        }
+
+        public EventContainer addEventContainer(int EventID, string Description, P2PContainer Container)
+        {
+            EventContainer eventContainer = new EventContainer
+            {
+                EventID = EventID,
+                Description = "Event " + EventID,
+                Container = Container
+            };
+
+            return eventContainer;
         }
     }
 }

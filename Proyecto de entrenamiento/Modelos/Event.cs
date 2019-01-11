@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Proyecto_de_entrenamiento.Modelos
 {
-    class Event
+    public class Event
     {
         public int EventID { get; set; }
         public int OrganizationID { get; set; }
-
+        public string Description { get; set; }
+        public int ContainerID { get; set; }
     }
 }

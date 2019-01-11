@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto_de_entrenamiento.Modelos
 {
-    class P2PContainer
+    public class P2PContainer
     {
         public int ContainerID { get; set; }
         public int EventID { get; set; }
@@ -16,5 +16,6 @@ namespace Proyecto_de_entrenamiento.Modelos
         public bool IsHeroLocked { get; set; }
         public int SortOrder { get; set; }
         public int ColumnOrder { get; set; }
+        public List<P2PWidget> widgets { get; set; }
     }
 }

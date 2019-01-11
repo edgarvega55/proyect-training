@@ -5,7 +5,7 @@ namespace Proyecto_de_entrenamiento.Repositorios
 {
     interface IEventRepository
     {
-        Event addEvent(int EventID, int OrganizationID);
+        Event addEvent(int EventID, int OrganizationID, int ContainerID);
     }
 
     class EventRepository : IEventRepository
@@ -15,12 +15,14 @@ namespace Proyecto_de_entrenamiento.Repositorios
 
         }
 
-        public Event addEvent(int EventID, int OrganizationID)
+        public Event addEvent(int EventID, int OrganizationID, int ContainerID)
         {
             Event newEvent = new Event
             {
                 EventID = EventID,
-                OrganizationID = OrganizationID
+                OrganizationID = OrganizationID,
+                Description = "Event " + EventID,
+                ContainerID = ContainerID
             };
 
             return newEvent;
