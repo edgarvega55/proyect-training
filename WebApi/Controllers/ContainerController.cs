@@ -30,7 +30,7 @@ namespace WebApi.Controllers
         [Route("event/{eventID}/page/{pageType}")]
         public IHttpActionResult getEvents(int eventID, int pageType)
         {
-            EventContainer eventContainer = events.FindEvent(eventList, containerList, eventID);
+            EventContainer eventContainer = events.FindEvent(eventList, containerList, eventID, pageType);
             return Ok(eventContainer);
         }
 

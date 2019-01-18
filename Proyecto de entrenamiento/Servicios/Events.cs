@@ -2,13 +2,14 @@
 using Proyecto_de_entrenamiento.Repositorios;
 using Proyecto_de_entrenamiento.Modelos;
 using System.Collections.Generic;
+using Proyecto_de_entrenamiento.Enums;
 
 namespace Proyecto_de_entrenamiento.Servicios
 {
     public interface IEvents
     {
         List<Event> createEvents();
-        EventContainer FindEvent(List<Event> events, List<P2PContainer> containers, int eventId);
+        EventContainer FindEvent(List<Event> events, List<P2PContainer> containers, int eventId, int pageType);
     }
 
     public class Events : IEvents
@@ -28,7 +29,7 @@ namespace Proyecto_de_entrenamiento.Servicios
             return events;
         }
 
-        public EventContainer FindEvent (List<Event> events, List<P2PContainer> containers, int eventId)
+        public EventContainer FindEvent (List<Event> events, List<P2PContainer> containers, int eventId, int pageType)
         {
             EventContainer eventContainer;
 
@@ -38,8 +39,15 @@ namespace Proyecto_de_entrenamiento.Servicios
                 {
                     IContainer servicioContainer = new Container();
                     P2PContainer container = servicioContainer.FindContainer(containers, entityEvent.ContainerID);
-                    eventContainer = addEventContainer(entityEvent.EventID, entityEvent.Description, container);
-                    return eventContainer;
+                    if (container.P2PPageTypeID == AssignAPageType(pageType))
+                    {
+                        eventContainer = addEventContainer(entityEvent.EventID, entityEvent.Description, container);
+                        return eventContainer;
+                    } else
+                    {
+                        return null;
+                    }
+                    
                 }
             }
 
@@ -56,6 +64,26 @@ namespace Proyecto_de_entrenamiento.Servicios
             };
 
             return eventContainer;
+        }
+
+        private string AssignAPageType(int ContainerID)
+        {
+            string P2PPageTypeID = "";
+
+            if (ContainerID == 1 || ContainerID == 3)
+            {
+                P2PPageTypeID = pageType.Event.ToString();
+            }
+            else if (ContainerID == 2 || ContainerID == 4)
+            {
+                P2PPageTypeID = pageType.Donation.ToString();
+            }
+            else if (ContainerID == 5)
+            {
+                P2PPageTypeID = pageType.DonationThankYou.ToString();
+            }
+
+            return P2PPageTypeID;
         }
     }
 }
