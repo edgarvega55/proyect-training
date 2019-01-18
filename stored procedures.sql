@@ -8,12 +8,12 @@ AS
 	ORDER BY e.EventID
 GO
 
-CREATE PROCEDURE ContainerByEvent
-	@EvenID INTEGER
+ALTER PROCEDURE ContainerByEvent
+	@EvenID INTEGER, @PageType varchar(25)
 AS
 	SELECT c.EventID, c.ContainerID, c.P2PPageTypeID, c.Properties, c.IsHero, c.IsHeroLocked, c.SortOrder, c.ColumnOrder
 	FROM P2PContainer c
-	WHERE c.EventID = @EvenID
+	WHERE c.EventID = @EvenID and c.P2PPageTypeID = "DonationThankYou"
 GO
 
 CREATE PROCEDURE ContainerContentByContainer

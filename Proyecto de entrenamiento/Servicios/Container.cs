@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
+using Proyecto_de_entrenamiento.Enums;
 
 namespace Proyecto_de_entrenamiento.Servicios
 {
     public interface IContainer
     {
-        List<P2PContainer> ContainersByEvent(int EventID);
+        List<P2PContainer> ContainersByEvent(int EventID, int PageType);
         List<P2PContainer> AllContainers();
     }
 
@@ -24,13 +25,14 @@ namespace Proyecto_de_entrenamiento.Servicios
             conn = new SqlConnection(settings);
         }
 
-        public List<P2PContainer> ContainersByEvent (int EventID)
+        public List<P2PContainer> ContainersByEvent(int EventID, int PageType)
         {
             conn.Open();
             List<P2PContainer> containers = new List<P2PContainer>();
             IContainerRepository containerRepository;
 
             string sql = "EXECUTE ContainerByEvent;";
+            string P2PPageType = AssignAPageType(PageType);
             SqlCommand command = new SqlCommand(sql, conn)
             {
                 CommandType = CommandType.StoredProcedure,
@@ -38,6 +40,8 @@ namespace Proyecto_de_entrenamiento.Servicios
             };
             command.Parameters.Add("@EvenID", SqlDbType.Int);
             command.Parameters["@EvenID"].Value = EventID;
+            command.Parameters.Add("@PageType", SqlDbType.VarChar);
+            command.Parameters["@PageType"].Value = P2PPageType;
 
             SqlDataReader dataReader = command.ExecuteReader();
 
@@ -115,6 +119,26 @@ namespace Proyecto_de_entrenamiento.Servicios
                 return true;
             else
                 return false;
+        }
+
+        private string AssignAPageType(int PageType)
+        {
+            string P2PPageTypeID = "";
+
+            if (PageType == 1)
+            {
+                P2PPageTypeID = "Event";
+            }
+            else if (PageType == 2)
+            {
+                P2PPageTypeID = "Donation";
+            }
+            else if (PageType == 3)
+            {
+                P2PPageTypeID = "DonationThankYou";
+            }
+
+            return P2PPageTypeID;
         }
     }
 }

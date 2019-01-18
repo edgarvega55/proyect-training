@@ -11,7 +11,7 @@ namespace Proyecto_de_entrenamiento.Servicios
     public interface IEvents
     {
         List<Event> AllEvents();
-        Event FindEvent(int eventId);
+        Event FindEvent(int eventId, int PageType);
     }
 
     public class Events : IEvents
@@ -42,7 +42,7 @@ namespace Proyecto_de_entrenamiento.Servicios
             {
                 int EventID = int.Parse(dataReader.GetValue(0).ToString());
                 int OrganizationID = int.Parse(dataReader.GetValue(1).ToString());
-                List<P2PContainer> container = servicioContainer.ContainersByEvent(EventID);
+                List<P2PContainer> container = servicioContainer.ContainersByEvent(EventID,0);
                 Event newEvent = eventRepository.addEvent(EventID, OrganizationID, container);
                 events.Add(newEvent);
             }
@@ -50,7 +50,7 @@ namespace Proyecto_de_entrenamiento.Servicios
             return events;
         }
 
-        public Event FindEvent (int EventID)
+        public Event FindEvent (int EventID, int PageType)
         {
             conn.Open();
 
@@ -73,7 +73,7 @@ namespace Proyecto_de_entrenamiento.Servicios
             {
                 int eventId = int.Parse(dataReader.GetValue(0).ToString());
                 int OrganizationID = int.Parse(dataReader.GetValue(1).ToString());
-                List<P2PContainer> containers = servicioContainer.ContainersByEvent(eventId);
+                List<P2PContainer> containers = servicioContainer.ContainersByEvent(eventId, PageType);
 
                 newEvent = eventRepository.addEvent(eventId, OrganizationID, containers);
                 conn.Close();

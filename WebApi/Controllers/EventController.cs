@@ -28,7 +28,7 @@ namespace WebApi.Controllers
         [Route("event/{eventID}/page/{pageType}")]
         public IHttpActionResult getEvents(int eventID, int pageType)
         {
-            Event eventFound = events.FindEvent(eventID);
+            Event eventFound = events.FindEvent(eventID, pageType);
             return Ok(eventFound);
         }
 
