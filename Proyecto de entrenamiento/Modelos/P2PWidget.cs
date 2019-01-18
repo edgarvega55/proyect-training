@@ -13,9 +13,9 @@ namespace Proyecto_de_entrenamiento.Modelos
         public string Locked { get; set; }
         public string Properties { get; set; }
         public int SortOrder { get; set; }
-        public int P2PWidgetTypeID { get; set; }
+        public string P2PWidgetTypeID { get; set; }
         public bool IsRequired { get; set; }
         public string IsVisible { get; set; }
-        public int VisibilityConditionTypeID { get; set; }
+        public string VisibilityConditionTypeID { get; set; }
     }
 }

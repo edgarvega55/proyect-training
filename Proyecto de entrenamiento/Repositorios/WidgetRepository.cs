@@ -6,25 +6,25 @@ namespace Proyecto_de_entrenamiento.Repositorios
 {
     interface IWidgetRepository
     {
-        P2PWidget AddWidget(int WidgetID, int ContainerID);
+        P2PWidget AddWidget(int WidgetID, int ContainerID, string Locked, string Properties, int SortOrder, string P2PWidgetTypeID, bool IsRequired, string IsVisible, string VisibilityConditionTypeID);
         List<P2PWidgetContent> AddWidgetContent(int WidgetID);
     }
 
     class WidgetRepository : IWidgetRepository
     {
-        public P2PWidget AddWidget(int WidgetID, int ContainerID)
+        public P2PWidget AddWidget(int WidgetID, int ContainerID, string Locked, string Properties, int SortOrder, string P2PWidgetTypeID, bool IsRequired, string IsVisible, string VisibilityConditionTypeID)
         {
             P2PWidget widget = new P2PWidget
             {
                 WidgetID = WidgetID,
                 ContainerID = ContainerID,
-                Locked = WidgetID % 2 == 0 ? "n" : "y",
-                Properties = "{'type':'video'}",
-                SortOrder = 1,
-                P2PWidgetTypeID = 1,
-                IsRequired = true,
-                IsVisible = WidgetID % 2 == 0 ? "n" : "y",
-                VisibilityConditionTypeID = 0
+                Locked = Locked,
+                Properties = Properties,
+                SortOrder = SortOrder,
+                P2PWidgetTypeID = P2PWidgetTypeID,
+                IsRequired = IsRequired,
+                IsVisible = IsVisible,
+                VisibilityConditionTypeID = VisibilityConditionTypeID
             };
 
             return widget;
@@ -53,5 +53,7 @@ namespace Proyecto_de_entrenamiento.Repositorios
 
             return WidgetContentList;
         }
+
+       
     }
 }

@@ -6,14 +6,7 @@ namespace Proyecto_de_entrenamiento
     {
         static void Main(string[] args)
         {
-            
-            
-            IContainer container = new Container();
-            IEvents events = new Events();
-
-            container.createContainers();
-            events.createEvents();
-            Console.ReadLine();
+       
         }
     }
 }

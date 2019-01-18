@@ -9,46 +9,45 @@ using Proyecto_de_entrenamiento.Servicios;
 
 namespace WebApi.Controllers
 {
-    public class ContainerController : ApiController
+    public class WidgetController : ApiController
     {
+        private IWidgets widget;
 
-        private IContainer container;
-
-        public ContainerController()
+        public WidgetController()
         {
-            container = new Container();
+            widget = new Widgets();
         }
 
-        [Route("containers")]
-        public IHttpActionResult GetAllContainers()
+        [Route("widgets")]
+        public IHttpActionResult GetAllWidgets()
         {
-            List<P2PContainer> containers = container.AllContainers();
-            return Ok(containers);
+            List<P2PWidget> widgets = widget.AllWidgets();
+            return Ok(widgets);
         }
 
-        // GET: api/Container
+        // GET: api/Widget
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Container/5
+        // GET: api/Widget/5
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/Container
+        // POST: api/Widget
         public void Post([FromBody]string value)
         {
         }
 
-        // PUT: api/Container/5
+        // PUT: api/Widget/5
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE: api/Container/5
+        // DELETE: api/Widget/5
         public void Delete(int id)
         {
         }

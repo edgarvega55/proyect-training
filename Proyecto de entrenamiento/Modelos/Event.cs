@@ -11,6 +11,6 @@ namespace Proyecto_de_entrenamiento.Modelos
         public int EventID { get; set; }
         public int OrganizationID { get; set; }
         public string Description { get; set; }
-        public int ContainerID { get; set; }
+        public List<P2PContainer> Containers { get; set; }
     }
 }

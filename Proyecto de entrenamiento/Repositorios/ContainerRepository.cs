@@ -7,28 +7,31 @@ namespace Proyecto_de_entrenamiento.Repositorios
 {
     interface IContainerRepository
     {
-        P2PContainer AddContainer(int ContainerID);
+        P2PContainer AddContainer(int ContainerID, int EventID, string P2PPageTypeID, string Properties, bool IsHero, bool IsHeroLocked, int SortOrder, int ColumnOrder, bool widget);
         P2PContainerContent AddContainerContent(int ContainerID);
     }
 
     class ContainerRepository : IContainerRepository
     {
-        public P2PContainer AddContainer(int ContainerID)
+        public P2PContainer AddContainer(int ContainerID, int EventID, string P2PPageTypeID, string Properties, bool IsHero, bool IsHeroLocked, int SortOrder, int ColumnOrder, bool widget)
         {
             P2PContainer container = new P2PContainer
             {
                 ContainerID = ContainerID,
-                EventID = 1,
-                P2PPageTypeID = AssignAPageType(ContainerID),
-                Properties = "{'title':'test'}",
-                IsHero = false,
-                IsHeroLocked = false,
-                SortOrder = 1,
-                ColumnOrder = 1
+                EventID = EventID,
+                P2PPageTypeID = P2PPageTypeID,
+                Properties = Properties,
+                IsHero = IsHero,
+                IsHeroLocked = IsHeroLocked,
+                SortOrder = SortOrder,
+                ColumnOrder = ColumnOrder
             };
 
-            IWidgets widgets = new Widgets();
-            widgets.CreateWidgets(container);
+            if (widget)
+            {
+                IWidgets widgets = new Widgets();
+                container.widgets = widgets.WidgetsByContainer(ContainerID);
+            }
 
             return container;
         }
