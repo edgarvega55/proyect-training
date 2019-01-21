@@ -10,7 +10,7 @@ namespace Proyecto_de_entrenamiento.Repositorios
         List<P2PWidgetContent> AddWidgetContent(int WidgetID);
     }
 
-    class WidgetRepository : IWidgetRepository
+    public class WidgetRepository : IWidgetRepository
     {
         public P2PWidget AddWidget(int WidgetID, int ContainerID, string Locked, string Properties, int SortOrder, string P2PWidgetTypeID, bool IsRequired, string IsVisible, string VisibilityConditionTypeID)
         {

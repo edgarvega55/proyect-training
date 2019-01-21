@@ -48,11 +48,6 @@ namespace Proyecto_de_entrenamiento.Repositorios
             return containerContent;
         }
 
-        public void testInterface()
-        {
-
-        }
-
         private string AssignAPageType (int ContainerID)
         {
             string P2PPageTypeID = "";
