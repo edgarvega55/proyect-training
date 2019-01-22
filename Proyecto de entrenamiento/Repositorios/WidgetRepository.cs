@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace Proyecto_de_entrenamiento.Repositorios
 {
-    interface IWidgetRepository
+    public interface IWidgetRepository
     {
         List<P2PWidget> WidgetsByContainer(int ContainerID);
         List<P2PWidget> AllWidgets();
@@ -17,14 +17,12 @@ namespace Proyecto_de_entrenamiento.Repositorios
     {
         private SqlConnection conn;
 
-        public WidgetRepository()
+       
+        public List<P2PWidget> WidgetsByContainer(int ContainerID)
         {
             string settings = ConfigurationManager.ConnectionStrings["dbconnectionTraining"].ConnectionString;
             conn = new SqlConnection(settings);
-        }
 
-        public List<P2PWidget> WidgetsByContainer(int ContainerID)
-        {
             List<P2PWidget> widgets = new List<P2PWidget>();
             
             conn.Open();
@@ -70,6 +68,8 @@ namespace Proyecto_de_entrenamiento.Repositorios
 
         public List<P2PWidget> AllWidgets()
         {
+            string settings = ConfigurationManager.ConnectionStrings["dbconnectionTraining"].ConnectionString;
+            conn = new SqlConnection(settings);
             List<P2PWidget> widgets = new List<P2PWidget>();
 
             conn.Open();

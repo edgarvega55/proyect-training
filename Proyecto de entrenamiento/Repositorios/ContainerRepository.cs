@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Proyecto_de_entrenamiento.Repositorios
 {
-    interface IContainerRepository
+    public interface IContainerRepository
     {
         List<P2PContainer> ContainersByEvent(int EventID, int PageType);
         List<P2PContainer> AllContainers();
@@ -21,12 +21,14 @@ namespace Proyecto_de_entrenamiento.Repositorios
 
         public ContainerRepository()
         {
-            string settings = ConfigurationManager.ConnectionStrings["dbconnectionTraining"].ConnectionString;
-            conn = new SqlConnection(settings);
+            
         }
 
         public List<P2PContainer> ContainersByEvent(int EventID, int PageType)
         {
+            string settings = ConfigurationManager.ConnectionStrings["dbconnectionTraining"].ConnectionString;
+            conn = new SqlConnection(settings);
+
             List<P2PContainer> containers = new List<P2PContainer>();
             
             conn.Open();
@@ -81,9 +83,13 @@ namespace Proyecto_de_entrenamiento.Repositorios
 
         public List<P2PContainer> AllContainers()
         {
-            conn.Open();
+            string settings = ConfigurationManager.ConnectionStrings["dbconnectionTraining"].ConnectionString;
+            conn = new SqlConnection(settings);
+
             List<P2PContainer> containers = new List<P2PContainer>();
-            
+
+            conn.Open();
+
             string sql = "EXECUTE AllContainers;";
             SqlCommand command = new SqlCommand(sql, conn)
             {

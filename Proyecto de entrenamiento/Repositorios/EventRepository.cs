@@ -8,20 +8,19 @@ using Proyecto_de_entrenamiento.Repositorios;
 
 namespace Proyecto_de_entrenamiento.Repositorios
 {
-    interface IEventRepository
+    public interface IEventRepository
     {
         List<Event> AllEvents();
         Event FindEvent(int EventID, int PageType);
     }
 
-    class EventRepository : IEventRepository
+    public class EventRepository : IEventRepository
     {
         private SqlConnection conn;
 
         public EventRepository()
         {
-            string settings = ConfigurationManager.ConnectionStrings["dbconnectionTraining"].ConnectionString;
-            conn = new SqlConnection(settings);
+            
         }
 
         public Event addEvent(int EventID, int OrganizationID, List<P2PContainer> Containers)
@@ -39,6 +38,8 @@ namespace Proyecto_de_entrenamiento.Repositorios
 
         public List<Event> AllEvents()
         {
+            string settings = ConfigurationManager.ConnectionStrings["dbconnectionTraining"].ConnectionString;
+            conn = new SqlConnection(settings);
             IEventRepository eventRepository = new EventRepository();
             IContainerRepository servicioContainer = new ContainerRepository();
             List<Event> events = new List<Event>();
@@ -56,8 +57,7 @@ namespace Proyecto_de_entrenamiento.Repositorios
 
                 int EventID = int.Parse(dataReader.GetValue(0).ToString());
                 int OrganizationID = int.Parse(dataReader.GetValue(1).ToString());
-                //List<P2PContainer> container = servicioContainer.ContainersByEvent(EventID, 0);
-                List<P2PContainer> container = new List<P2PContainer>();
+                List<P2PContainer> container = servicioContainer.ContainersByEvent(EventID, 1);
                 Event newEvent = addEvent(EventID, OrganizationID, container);
                 events.Add(newEvent);
             }
@@ -66,11 +66,13 @@ namespace Proyecto_de_entrenamiento.Repositorios
 
         public Event FindEvent(int EventID, int PageType)
         {
-
+            string settings = ConfigurationManager.ConnectionStrings["dbconnectionTraining"].ConnectionString;
+            conn = new SqlConnection(settings);
             IContainerRepository servicioContainer = new ContainerRepository();
             IEventRepository eventRepository = new EventRepository();
-
             Event newEvent;
+
+            conn.Open();
 
             string sql = "EXECUTE EventByID;";
             SqlCommand command = new SqlCommand(sql, conn)
@@ -86,8 +88,7 @@ namespace Proyecto_de_entrenamiento.Repositorios
             {
                 int eventId = int.Parse(dataReader.GetValue(0).ToString());
                 int OrganizationID = int.Parse(dataReader.GetValue(1).ToString());
-                //List<P2PContainer> containers = servicioContainer.ContainersByEvent(eventId, PageType);
-                List<P2PContainer> containers = new List<P2PContainer>();
+                List<P2PContainer> containers = servicioContainer.ContainersByEvent(eventId, PageType);
                 newEvent = addEvent(eventId, OrganizationID, containers);
                 conn.Close();
                 return newEvent;

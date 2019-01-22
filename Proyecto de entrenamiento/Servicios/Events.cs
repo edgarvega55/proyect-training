@@ -14,23 +14,27 @@ namespace Proyecto_de_entrenamiento.Servicios
 
     public class Events : IEvents
     {
-        
+        IEventRepository _eventRepository;
+
         public Events()
         {
-            
+            _eventRepository = new EventRepository();
+        }
+
+        public Events(IEventRepository eventRepository)
+        {
+            _eventRepository = eventRepository;
         }
 
         public List<Event> AllEvents()
         {
-            IEventRepository eventRepository = new EventRepository();
-            List<Event> events = eventRepository.AllEvents();
+            List<Event> events = _eventRepository.AllEvents();
             return events;
         }
 
         public Event FindEvent (int EventID, int PageType)
         {
-            IEventRepository eventRepository = new EventRepository();
-            Event newEvent = eventRepository.FindEvent(EventID, PageType);
+            Event newEvent = _eventRepository.FindEvent(EventID, PageType);
             return newEvent;
         }
 
